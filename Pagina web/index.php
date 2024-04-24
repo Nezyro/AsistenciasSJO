@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php require_once "config/conexion.php"; ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -107,6 +106,3 @@
         } // fin del else del condicional de si hemos puesto bien los datos en el formulario
 
     } //fin del if del request method = post
-=======
-
->>>>>>> 0f826a060a77c787438d21b746af76bed2246221
