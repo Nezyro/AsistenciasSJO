@@ -106,3 +106,6 @@
         } // fin del else del condicional de si hemos puesto bien los datos en el formulario
 
     } //fin del if del request method = post
+    ?>
+</body>
+</html>
