@@ -1,0 +1,29 @@
+{
+    "clases": [
+        {
+            "id": 1,
+            "fecha_inicio": "2024-07-05",
+            "fecha_final": "2025-06-15"
+        },
+        {
+            "id": 22,
+            "fecha_inicio": "2024-07-05",
+            "fecha_final": "2025-06-15"
+        },
+        {
+            "id": 23,
+            "fecha_inicio": "2024-07-05",
+            "fecha_final": "2025-06-15"
+        },
+        {
+            "id": 24,
+            "fecha_inicio": "2024-07-05",
+            "fecha_final": "2025-06-15"
+        },
+        {
+            "id": 25,
+            "fecha_inicio": "2024-07-05",
+            "fecha_final": "2025-08-15"
+        }
+    ]
+}
