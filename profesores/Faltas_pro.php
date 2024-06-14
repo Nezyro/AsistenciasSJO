@@ -1,5 +1,15 @@
 <?php
 
+require_once '../config/config.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
+    header('Location: ../login.php');
+    exit();
+}
+
 include '../config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['visto']) && is_array($_POST['visto']) && !empty($_POST['visto'])) {
@@ -143,13 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['visto']) && is_array($
                                         </thead>
                                         <tbody>
                                             <?php
-                                            require_once '../config/config.php';
-
-                                            if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
-                                                header('Location: ../login.php');
-                                                exit();
-                                            }
-
                                             $profesor_dni = $_SESSION['DNI'];
 
                                             try {
