@@ -1,8 +1,6 @@
 <?php
+session_start();
 require_once '../config/config.php';
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
 if (!isset($_SESSION['DNI']) || $_SESSION['rol'] !== 'PRO') {
     header('Location: ../login.php');
@@ -10,25 +8,6 @@ if (!isset($_SESSION['DNI']) || $_SESSION['rol'] !== 'PRO') {
 }
 
 $profesor_dni = $_SESSION['DNI'];
-
-try {
-    $sql = "SELECT a.ID, a.Nombre, a.Apellidos, m.Nombre AS nombre_materia 
-            FROM alumno a 
-            INNER JOIN materia m ON a.ID_materia = m.ID 
-            WHERE m.ID_Profesor = :profesor_dni";
-    $stmt = $db->prepare($sql);
-    $stmt->execute(['profesor_dni' => $profesor_dni]);
-
-    if ($stmt->rowCount() > 0) {
-        $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $students = [];
-        $no_students_message = "No se encontraron alumnos inscritos en las materias del profesor.";
-    }
-} catch (PDOException $e) {
-    error_log('Error en la base de datos: ' . $e->getMessage());
-    die('Error en la base de datos. Por favor, contacte al administrador.');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -141,20 +120,32 @@ try {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php if (!empty($students)) : ?>
-                                            <?php foreach ($students as $student) : ?>
-                                                <tr>
-                                                    <td><?= $student['ID'] ?></td>
-                                                    <td><?= $student['Nombre'] ?></td>
-                                                    <td><?= $student['Apellidos'] ?></td>
-                                                    <td><?= $student['nombre_materia'] ?></td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
-                                            <tr>
-                                                <td colspan="4"><?= isset($no_students_message) ? $no_students_message : 'No hay alumnos disponibles.' ?></td>
-                                            </tr>
-                                        <?php endif; ?>
+                                    <?php
+                                        try {
+                                            $sql = "SELECT a.ID, a.Nombre, a.Apellidos, m.Nombre AS nombre_materia 
+                                                    FROM alumno a 
+                                                    INNER JOIN materia m ON a.ID_materia = m.ID 
+                                                    WHERE m.ID_Profesor = :profesor_dni";
+                                            $stmt = $db->prepare($sql);
+                                            $stmt->execute(['profesor_dni' => $profesor_dni]);
+
+                                            if ($stmt->rowCount() > 0) {
+                                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                    echo "<tr>";
+                                                    echo "<td>" . $row["ID"] . "</td>";
+                                                    echo "<td>" . $row["Nombre"] . "</td>";
+                                                    echo "<td>" . $row["Apellidos"] . "</td>";
+                                                    echo "<td>" . $row["nombre_materia"] . "</td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='4'>No se encontraron alumnos inscritos en las materias del profesor.</td></tr>";
+                                            }
+                                        } catch (PDOException $e) {
+                                            error_log('Error en la base de datos: ' . $e->getMessage());
+                                            die('Error en la base de datos. Por favor, contacte al administrador.');
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
