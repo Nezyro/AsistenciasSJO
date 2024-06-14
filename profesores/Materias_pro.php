@@ -1,9 +1,7 @@
 <?php
 require_once '../config/config.php';
-
-if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
-    header('Location: login.php');
-    exit();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
 ?>
 

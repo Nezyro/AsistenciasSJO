@@ -113,7 +113,7 @@
                                     require_once '../config/config.php';
 
                                     if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
-                                        header('Location: login.php');
+                                        header('Location: ../login.php');
                                         exit();
                                     }
 
