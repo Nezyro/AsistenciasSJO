@@ -110,7 +110,7 @@ while ($fecha_obj_inicio <= $fecha_obj_final) {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="alumnos_pro.php">
+                <a class="nav-link" href="Alumnos_pro.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Alumnos</span></a>
             </li>
