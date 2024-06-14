@@ -1,3 +1,11 @@
+<?php
+require_once '../config/config.php';
+
+if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
+    header('Location: login.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,13 +97,7 @@
                     </p>
                     <div class="row">
                     <?php
-                        require_once '../config/config.php';
-
-                        if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
-                            header('Location: login.php');
-                            exit();
-                        }
-
+                        
                         $profesor_dni = $_SESSION['DNI'];
 
                         try {
