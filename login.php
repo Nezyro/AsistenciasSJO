@@ -18,7 +18,7 @@ if (isset($_POST["logout"])) {
     session_destroy();
 
     header("Location: login.php");
-    exit; 
+    exit;
 }
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
@@ -32,7 +32,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
 }
 
-
 require_once "config/config.php";
 $userdni = "";
 $password = "";
@@ -41,47 +40,41 @@ $password_error = "";
 $login_error = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-
     if(empty(trim($_POST["userdni"]))){
         $userdni_error = "Introduce tu DNI o nombre de usuario";
     } else {
         $sql = "SELECT DNI, Nombre, Password, rol FROM personal WHERE DNI = :DNI OR Nombre = :Nombre";
-    
+
         if($stmt = $db->prepare($sql)){
             $stmt->bindParam(":DNI", $param_userdni, PDO::PARAM_STR);
             $stmt->bindParam(":Nombre", $param_username, PDO::PARAM_STR);
-    
+
             $param_userdni = trim($_POST["userdni"]);
-            $param_username = trim($_POST["userdni"]); 
-    
+            $param_username = trim($_POST["userdni"]);
+
             if($stmt->execute()){
                 if($stmt->rowCount() == 1){
-                    if($row = $stmt->fetch()){
-                        $userdni = $row["DNI"];
-                        $db_password = $row["Password"];
-                        if($_POST["password"] === $db_password){
-                            session_start();
-    
-                            
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["DNI"] = $userdni;
-                            $_SESSION["Nombre"] = $row["Nombre"];
-                            $_SESSION["rol"] = $row["rol"];
-    
-                            
-                            if($row["rol"] == "PRO"){
-                                header("location: ./profesores/index_pro.php");
-                            } elseif ($row["rol"] == "COO"){
-                                header("location: ./cordinadores/index_coo.php");                                
-                            } elseif ($row["rol"] == "ADM"){
-                                header("location: index.php");                   
-                            }
-                            exit;
-                        } else {
-                            $login_error = "La contraseña no es correcta";
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $userdni = $row["DNI"];
+                    $db_password = $row["Password"];
+
+                    if($_POST["password"] === $db_password){
+                        
+                        $_SESSION["loggedin"] = true;
+                        $_SESSION["DNI"] = $userdni;
+                        $_SESSION["Nombre"] = $row["Nombre"];
+                        $_SESSION["rol"] = $row["rol"];
+
+                        if($row["rol"] == "PRO"){
+                            header("Location: ./profesores/index_pro.php");
+                        } elseif ($row["rol"] == "COO"){
+                            header("Location: ./coordinadores/index_coo.php");                                
+                        } elseif ($row["rol"] == "ADM"){
+                            header("Location: index.php");                   
                         }
+                        exit;
                     } else {
-                        $login_error = "Ups, algo ha ido mal.";
+                        $login_error = "La contraseña no es correcta";
                     }
                 } else {
                     $login_error = "El usuario no existe";
@@ -93,8 +86,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         } else {
             $login_error = "Ups, algo ha ido mal.";
         }
-        unset($db);
     }
+    unset($db);
 }
 ?>
 
