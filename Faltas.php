@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['visto']) && is_array($_POST['visto']) &&!empty($_POST['visto'])) {

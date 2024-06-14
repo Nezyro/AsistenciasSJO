@@ -89,7 +89,6 @@
                     </p>
                     <div class="row">
                     <?php
-                        session_start();
                         require_once '../config/config.php';
 
                         if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {

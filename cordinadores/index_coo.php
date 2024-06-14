@@ -1,3 +1,10 @@
+<?php
+
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,14 +30,7 @@
 
 
 <body id="page-top">
-    <?php
-        session_start();
-
-        if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-            header("location: login.php");
-            exit;
-        }
-    ?>
+    
     <!-- Page Wrapper -->
     <div id="wrapper">
 
