@@ -1,7 +1,13 @@
 <?php
+
 require_once '../config/config.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}
+
+if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
+    header('Location: ../login.php');
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -116,13 +122,6 @@ if (session_status() == PHP_SESSION_NONE) {
                                     </thead>
                                     <tbody>
                                     <?php
-                                    require_once '../config/config.php';
-
-                                    if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
-                                        header('Location: ../login.php');
-                                        exit();
-                                    }
-
                                     $profesor_dni = $_SESSION['DNI'];
 
                                     try {
@@ -151,7 +150,6 @@ if (session_status() == PHP_SESSION_NONE) {
                                         echo 'Error de base de datos: ' . $e->getMessage();
                                     }
                                     ?>
-
                                     </tbody>
                                 </table>
                             </div>
