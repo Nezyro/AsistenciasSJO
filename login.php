@@ -1,34 +1,37 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 if (isset($_POST["logout"])) {
-    $_SESSION = array();
+    $_SESSION = array(); 
 
     if (ini_get("session.use_cookies")) {
         $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000, 
+        setcookie(session_name(), '', time() - 42000,
             $params["path"], $params["domain"],
             $params["secure"], $params["httponly"]
         );
     }
+
     session_destroy();
 
     header("Location: login.php");
-    exit;
+    exit; 
 }
 
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     if($_SESSION["rol"] == "PRO"){
-        header("location: index.php");
+        header("Location: ./profesores/index_pro.php");
     } elseif ($_SESSION["rol"] == "COO"){
-        header("location: coordinador.php");                                
+        header("Location: ./coordinadores/index_coo.php");                                
     } elseif ($_SESSION["rol"] == "ADM"){
-        header("location: index.php");                   
+        header("Location: index.php");                   
     }
     exit;
 }
+
 
 require_once "config/config.php";
 $userdni = "";
