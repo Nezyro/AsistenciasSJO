@@ -6,6 +6,7 @@ if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,7 +98,13 @@ if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
                     </p>
                     <div class="row">
                     <?php
-                        
+                        require_once '../config/config.php';
+
+                        if (!isset($_SESSION['DNI']) || $_SESSION['rol'] != 'PRO') {
+                            header('Location: login.php');
+                            exit();
+                        }
+
                         $profesor_dni = $_SESSION['DNI'];
 
                         try {
