@@ -59,7 +59,7 @@ if (session_status() == PHP_SESSION_NONE) {
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="Alumnos_pro.php">
+                <a class="nav-link" href="alumnos_pro.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Alumnos</span></a>
             </li>
